@@ -1,0 +1,23 @@
+{
+  "permissionRules": [
+    {
+      "action": "allow",
+      "tool": "*",
+      "description": "Allow all tools by default"
+    }
+  ],
+  "defaultPermissionMode": "bypassPermissions",
+  "allowedTools": [
+    "Read",
+    "Write",
+    "Edit",
+    "MultiEdit",
+    "Bash",
+    "BashOutput",
+    "Skill",
+    "Grep",
+    "Glob",
+    "WebFetch"
+  ],
+  "disallowedTools": []
+}
