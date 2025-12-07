@@ -9,9 +9,9 @@ const server = new McpServer({
 });
 
 server.registerTool(
-    'notion_shell',
+    'notion_agent',
     {
-        title: 'Notion Shell',
+        title: 'Notion Agent',
         description: 'For every notion-related query or task use this tool, raw prompts as input',
         inputSchema: {
             prompt: z.string(),
@@ -34,6 +34,7 @@ server.registerTool(
 
         let output = '';
         let finalResult = null;
+        let finalCosts = null;
 
         for await (const message of query({ prompt: fullPrompt, options: agentOptions })) {
             if (message.type === 'assistant' && message.message?.content) {
@@ -45,10 +46,11 @@ server.registerTool(
             }
             if (message.type === 'result' && message.result) {
                 finalResult = message.result;
+                finalCosts = message.total_cost_usd;
             }
         }
 
-        const result = { output: (finalResult || output).trim() || 'No output' };
+        const result = { output: (finalResult || output).trim() || 'No output' , costs: finalCosts};
         return {
             content: [{ type: 'text', text: JSON.stringify(result) }],
             structuredContent: result

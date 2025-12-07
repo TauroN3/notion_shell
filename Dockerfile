@@ -16,10 +16,16 @@ RUN npm install
 
 COPY mcp-server.js .
 
-RUN mkdir -p /home/appuser/.claude/skills/notion-api && \
+RUN mkdir -p /home/appuser/.claude/skills/read-data-notion-api && \
+    mkdir -p /home/appuser/.claude/skills/write-data-notion-api && \
+    mkdir -p /home/appuser/.claude/agents/data-reader && \
+    mkdir -p /home/appuser/.claude/agents/data-writer && \
     chown -R appuser:appuser /home/appuser/.claude
 
-COPY notion-api/ /home/appuser/.claude/skills/notion-api/
+COPY skills/read-data-notion-api/ /home/appuser/.claude/skills/read-data-notion-api/
+COPY skills/write-data-notion-api/ /home/appuser/.claude/skills/write-data-notion-api/
+COPY subagents/data-reader.md /home/appuser/.claude/agents/data-reader/
+COPY subagents/data-writer.md /home/appuser/.claude/agents/data-writer/
 COPY settings.json /home/appuser/.claude/settings.json
 
 RUN chown -R appuser:appuser /app
